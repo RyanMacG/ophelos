@@ -13,4 +13,8 @@ class Statement < ApplicationRecord
   def total_expenditure
     expenditures.sum(&:amount)
   end
+
+  def disposable_income
+    total_income - total_expenditure
+  end
 end
