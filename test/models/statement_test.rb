@@ -53,4 +53,50 @@ class StatementTest < ActiveSupport::TestCase
 
     assert_equal 2979.91, statement.reload.disposable_income
   end
+
+  class IncomeExpenditureRating < StatementTest
+    test '#income_expenditure_rating with A rating' do
+      statement = build(:statement)
+      income_1 = create(:income, statement:)
+      income_2 = create(:income, name: 'Investments', amount: 2000.00, statement:)
+      statement.incomes << [income_1, income_2]
+      statement.expenditures << [create(:expenditure, name: 'Fees', amount: 20.10, statement:)]
+      statement.save
+
+      assert_equal 'A', statement.reload.income_expenditure_rating
+    end
+
+    test '#income_expenditure_rating with B rating' do
+      statement = build(:statement)
+      income_1 = create(:income, statement:)
+      income_2 = create(:income, name: 'Investments', amount: 2000.00, statement:)
+      statement.incomes << [income_1, income_2]
+      statement.expenditures << [create(:expenditure, name: 'Fees', amount: 310.10, statement:)]
+      statement.save
+
+      assert_equal 'B', statement.reload.income_expenditure_rating
+    end
+
+    test '#income_expenditure_rating with C rating' do
+      statement = build(:statement)
+      income_1 = create(:income, statement:)
+      income_2 = create(:income, name: 'Investments', amount: 2000.00, statement:)
+      statement.incomes << [income_1, income_2]
+      statement.expenditures << [create(:expenditure, name: 'Fees', amount: 1300.10, statement:)]
+      statement.save
+
+      assert_equal 'C', statement.reload.income_expenditure_rating
+    end
+
+    test '#income_expenditure_rating with D rating' do
+      statement = build(:statement)
+      income_1 = create(:income, statement:)
+      income_2 = create(:income, name: 'Investments', amount: 2000.00, statement:)
+      statement.incomes << [income_1, income_2]
+      statement.expenditures << [create(:expenditure, name: 'Fees', amount: 1500.10, statement:)]
+      statement.save
+
+      assert_equal 'D', statement.reload.income_expenditure_rating
+    end
+  end
 end
