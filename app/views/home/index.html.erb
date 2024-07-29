@@ -1,1 +1,7 @@
-<p>Hello, just adding this to setup devise, will come back and clean this up if I have time.</p>
+<article>
+  <p>Hello, just adding this to setup devise, will come back and clean this up if I have time.</p>
+  <% if current_user %>
+    <%= link_to 'View or add statements', statements_path %>
+  <% end %>
+</article>
+
