@@ -5,33 +5,12 @@
     <h2>Income details</h2>
     <template data-nested-form-target="template">
         <%= f.fields_for :incomes, @statement.incomes.build, child_index: 'NEW_RECORD' do |income| %>
-          <div class="row">
-
-            <div class="col">
-              <%= income.label :name %>
-              <%= income.text_field :name, class: "form-control" %>
-            </div>
-
-            <div class="col">
-              <%= income.label :amount %>
-              <%= income.number_field :amount, step: :any, class: "form-control" %>
-            </div>
-          </div>
+          <%= render "income_fields", f: income %>
         <% end %> 
     </template>
 
     <%= f.fields_for :incomes, @statement.incomes.build do |income| %>
-      <div class="row">
-        <div class="col">
-          <%= income.label :name %>
-          <%= income.text_field :name, class: "form-control" %>
-        </div>
-
-        <div class="col">
-          <%= income.label :amount %>
-          <%= income.number_field :amount, step: :any, class: "form-control" %>
-        </div>
-      </div>
+      <%= render "income_fields", f: income %>
     <% end %> 
 
     <!-- Inserted elements will be injected before that target. -->
