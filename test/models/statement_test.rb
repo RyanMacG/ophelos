@@ -40,4 +40,17 @@ class StatementTest < ActiveSupport::TestCase
 
     assert_equal 20.09, statement.reload.total_expenditure
   end
+
+  test '#disposable_income' do
+    statement = build(:statement)
+    income_1 = create(:income, statement:)
+    income_2 = create(:income, name: 'Investments', amount: 2000.00, statement:)
+    expenditure_1 = create(:expenditure, statement:)
+    expenditure_2 = create(:expenditure, name: 'Fees', amount: 10.10, statement:)
+    statement.incomes << [income_1, income_2]
+    statement.expenditures << [expenditure_1, expenditure_2]
+    statement.save
+
+    assert_equal 2979.91, statement.reload.disposable_income
+  end
 end
