@@ -1,11 +1,27 @@
 <h1>New statement</h1>
 
-<%= form_for @statement do |f| %>
+<%= form_for @statement, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f| %>
   <div class="form-group pt-3 pb-3">
-    <div class="row">
-      <%= f.fields_for :incomes, @statement.incomes.build do |income| %>
-        <h2>Income details</h2>
+    <h2>Income details</h2>
+    <template data-nested-form-target="template">
+        <%= f.fields_for :incomes, @statement.incomes.build, child_index: 'NEW_RECORD' do |income| %>
+          <div class="row">
 
+            <div class="col">
+              <%= income.label :name %>
+              <%= income.text_field :name, class: "form-control" %>
+            </div>
+
+            <div class="col">
+              <%= income.label :amount %>
+              <%= income.number_field :amount, step: :any, class: "form-control" %>
+            </div>
+          </div>
+        <% end %> 
+    </template>
+
+    <%= f.fields_for :incomes, @statement.incomes.build do |income| %>
+      <div class="row">
         <div class="col">
           <%= income.label :name %>
           <%= income.text_field :name, class: "form-control" %>
@@ -15,8 +31,13 @@
           <%= income.label :amount %>
           <%= income.number_field :amount, step: :any, class: "form-control" %>
         </div>
-      <% end %> 
-    </div>
+      </div>
+    <% end %> 
+
+    <!-- Inserted elements will be injected before that target. -->
+    <div data-nested-form-target="target"></div>
+
+    <button type="button" data-action="nested-form#add" class="btn btn-secondary mt-3">Add income</button>
   </div>
 
   <div class="form-group">

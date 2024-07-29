@@ -6,11 +6,10 @@ class StatementsController < ApplicationController
   end
 
   def create
-    binding.irb
     @statement = current_user.statements.new(statement_params)
 
     if @statement.save
-      redirect_to statements_path, notice: 'Statement created successfully'
+      redirect_to statement_path(@statement), notice: 'Statement created successfully'
     else
       render :new, alert: 'Statement invalid'
     end
@@ -27,6 +26,8 @@ class StatementsController < ApplicationController
   private
 
   def statement_params
-    params.require(:statement).permit(incomes_attributes: %i[name amount], expenditures_attributes: %i[name amount])
+    params.require(:statement).permit(incomes_attributes: %i[id _destroy name amount],
+                                      expenditures_attributes: %i[id _destroy
+                                                                  name amount])
   end
 end
