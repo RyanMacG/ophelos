@@ -1,2 +1,26 @@
-<h1>Statements#index</h1>
-<p>Find me in app/views/statements/index.html.erb</p>
+<article>
+  <h1>Statements</h1>
+  <%= button_to 'New Statement', new_statement_path, method: :get, class: "btn btn-primary" %>
+ 
+  <% if @statements.any? %>
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Statment date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @statements.each do |statement| %>
+            <tr>
+              <td><%= statement.created_at.strftime('%d/%m/%y') %></td>
+              <td>
+                <%= link_to 'View', statement, class: 'btn btn-primary' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</article>
