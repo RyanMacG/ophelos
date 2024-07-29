@@ -7,6 +7,9 @@ class Statement < ApplicationRecord
   validates :incomes, presence: true
   validates :expenditures, presence: true
 
+  accepts_nested_attributes_for :incomes
+  accepts_nested_attributes_for :expenditures
+
   def total_income
     incomes.sum(&:amount)
   end
