@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_29_110426) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_29_111935) do
   create_table "expenditures", force: :cascade do |t|
     t.string "name"
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "statement_id"
+    t.index ["statement_id"], name: "index_expenditures_on_statement_id"
   end
 
   create_table "incomes", force: :cascade do |t|
@@ -23,6 +25,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_29_110426) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "statement_id"
+    t.index ["statement_id"], name: "index_incomes_on_statement_id"
   end
 
+  create_table "statements", force: :cascade do |t|
+    t.string "user"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "expenditures", "statements"
+  add_foreign_key "incomes", "statements"
 end
