@@ -3,7 +3,6 @@
 To run me:
 
 ```bash
-```bash
 bundle install
 bundle exec rails db:create db:migrate db:test:prepare
 bin/dev
